@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId      Int          @id @default(autoincrement())
+  email       String       @unique
+  hash        String
+  role        String       @default("normal")
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  credentials Credential[]
+  carts       Cart[]
+  orders      Order[]
+
+  @@map("users")
+}
+
+model Credential {
+  credentialId Int      @id @default(autoincrement())
+  name         String
+  nationality  String
+  birthplace   String
+  marital      String
+  gender       String
+  birthDate    DateTime
+  address      String
+  userId       Int
+  user         User     @relation(fields: [userId], references: [userId])
+
+  @@map("credentials")
+}
+
+model Inventory {
+  itemId      Int      @id @default(autoincrement())
+  description String
+  color       String?
+  marca       String
+  ncmId       Int
+  value       Decimal  @db.Decimal(10, 2)
+  quantity    Int
+  type        String
+  total       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  carts       Cart[]
+
+  @@map("inventory")
+}
+
+model Cart {
+  cartId   Int       @id @default(autoincrement())
+  itemId   Int
+  userId   Int
+  quantity Int       @default(1)
+  user     User      @relation(fields: [userId], references: [userId])
+  item     Inventory @relation(fields: [itemId], references: [itemId])
+  Order    Order[]
+}
+
+model Order {
+  orderId    Int      @id @default(autoincrement())
+  cartId     Int
+  userId     Int
+  status     String   @default("Waiting")
+  address    String
+  ship       Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  orderDate  DateTime @default(now())
+  cart       Cart     @relation(fields: [cartId], references: [cartId])
+  user       User     @relation(fields: [userId], references: [userId])
+}
