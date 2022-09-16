@@ -9,9 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createData = exports.CreateItemDto = void 0;
+exports.CreateItemDto = void 0;
 const class_validator_1 = require("class-validator");
+const SqlQuery_1 = require("../../utils/SqlQuery");
+const SQL = new SqlQuery_1.default();
 class CreateItemDto {
+    createdItem() {
+        const columns = `${this.description}, ${this.marca}, ${this.ncmId}, ${this.value}, ${this.quantity}, ${this.value}`;
+        return columns;
+    }
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
@@ -34,14 +40,4 @@ __decorate([
     __metadata("design:type", String)
 ], CreateItemDto.prototype, "type", void 0);
 exports.CreateItemDto = CreateItemDto;
-const dto = new CreateItemDto();
-exports.createData = {
-    description: dto.description,
-    color: dto.color,
-    marca: dto.marca,
-    ncmId: dto.ncmId,
-    value: dto.value,
-    quantity: dto.quantity,
-    type: dto.type,
-};
 //# sourceMappingURL=create-item.dto.js.map

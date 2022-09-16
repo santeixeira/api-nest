@@ -6,13 +6,5 @@ export declare class CreateItemDto {
     value: number;
     quantity: number;
     type: string;
+    createdItem(): string;
 }
-export declare const createData: {
-    description: string;
-    color: string;
-    marca: string;
-    ncmId: number;
-    value: number;
-    quantity: number;
-    type: string;
-};

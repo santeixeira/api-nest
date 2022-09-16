@@ -1,5 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
+import SqlQuery from 'src/utils/SqlQuery';
 
+const SQL = new SqlQuery();
 export class CreateItemDto {
   @IsNotEmpty()
   description: string;
@@ -13,15 +15,9 @@ export class CreateItemDto {
   quantity: number;
   @IsNotEmpty()
   type: string;
-}
 
-const dto = new CreateItemDto();
-export const createData = {
-  description: dto.description,
-  color: dto.color,
-  marca: dto.marca,
-  ncmId: dto.ncmId,
-  value: dto.value,
-  quantity: dto.quantity,
-  type: dto.type,
-};
+  public createdItem() {
+    const columns = `${this.description}, ${this.marca}, ${this.ncmId}, ${this.value}, ${this.quantity}, ${this.value}`;
+    return columns;
+  }
+}

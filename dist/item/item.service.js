@@ -32,20 +32,34 @@ let ItemService = class ItemService {
                 value: dto.value,
                 quantity: dto.quantity,
                 type: dto.type,
-                total: Math.ceil(dto.quantity * dto.value),
+                total: parseFloat((dto.value * dto.quantity).toFixed(2)),
             },
         });
         console.log(data);
         return data;
     }
-    findAll() {
-        return `This action returns all item`;
+    async findAll() {
+        const data = await this.prisma.inventory.findMany();
+        return data;
     }
-    findOne(id) {
-        return `This action returns a #${id} item`;
+    async findOne(id) {
+        const txt = await this.prisma.inventory.findFirstOrThrow({
+            where: {
+                itemId: id,
+            },
+        });
+        return { data: txt };
     }
-    update(id, updateItemDto) {
-        return `This action updates a #${id} item`;
+    async update(id, updateItemDto) {
+        const data = await this.prisma.inventory.update({
+            where: {
+                itemId: id,
+            },
+            data: {
+                description: updateItemDto.description,
+            },
+        });
+        return data;
     }
     remove(id) {
         return `This action removes a #${id} item`;

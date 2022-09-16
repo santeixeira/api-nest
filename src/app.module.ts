@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ItemModule } from './item/item.module';
+import { ShowcaseModule } from './showcase/showcase.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ItemModule } from './item/item.module';
     ItemModule,
     PrismaModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    ShowcaseModule,
   ],
 })
 export class AppModule {}

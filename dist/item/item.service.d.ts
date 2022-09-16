@@ -7,8 +7,10 @@ export declare class ItemService {
     private config;
     constructor(prisma: PrismaService, config: ConfigService);
     create(dto: CreateItemDto): Promise<import(".prisma/client").Inventory>;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateItemDto: UpdateItemDto): string;
+    findAll(): Promise<import(".prisma/client").Inventory[]>;
+    findOne(id: number): Promise<{
+        data: import(".prisma/client").Inventory;
+    }>;
+    update(id: number, updateItemDto: UpdateItemDto): Promise<import(".prisma/client").Inventory>;
     remove(id: number): string;
 }
